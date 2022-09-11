@@ -6,5 +6,7 @@ public class ThreadExample extends Thread {
     public static void main(String[] args) {
         ThreadExample te = new ThreadExample();
         te.start();
+        te.stop();
+        te.start();
     }
 }
