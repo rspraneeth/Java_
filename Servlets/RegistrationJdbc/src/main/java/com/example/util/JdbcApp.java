@@ -41,6 +41,5 @@ public class JdbcApp {
                 System.out.println(e.getMessage());
             }
         }
-
     }
 }
