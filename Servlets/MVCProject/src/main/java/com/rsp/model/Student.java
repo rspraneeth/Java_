@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Data
@@ -15,6 +16,7 @@ public class Student {
     private Connection connection;
     private PreparedStatement statement;
     private int row;
+    private ResultSet rs;
 
     public int register(){
         try {
@@ -39,5 +41,27 @@ public class Student {
             }
         }
         return row;
+    }
+
+    public void login(){
+        try {
+            connection = JdbcUtility.getConn();
+            String query = "select email, password from schema1.studentportal  where email=?";
+            if (connection!=null){
+                statement = connection.prepareStatement(query);
+                if (statement!=null){
+                    statement.setString(1, email);
+                    rs = statement.executeQuery();
+                    while (rs.next()){
+                        System.out.println("in while loop of result set");
+                        email = rs.getString("email");
+                        password = rs.getString("password");
+                        System.out.println("model: "+email+" "+password);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
